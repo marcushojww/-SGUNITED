@@ -1,0 +1,163 @@
+FloatLayout:
+#root widget
+#After Kivy instantiates subclass (MainApp) of App, it implicitly searches for main.kv. Since main.kv contains a root rule FloatLayout, it is used as the root widget
+#use FloatLayout due to its flexibility and I can place my widgets anywhere and allow them to overlap one another
+    Background: #child widget
+        id: background
+        canvas:
+            Rectangle: #background image
+                source: 'darkpastelmint.jpg'
+                pos: root.pos #(0,0) coordinate at bottom left of rectangle
+                size: root.size #size of the entire window
+            Rectangle: #moving sg united logo
+                size: root.width, 130 
+                pos: root.pos[0], root.height - 150
+                #its at the bottom left side of the screen (root.pos[0]), from the top, go down by 150 pixels (root.height - 150)
+                texture: self.singapore_texture
+                #need to use textures to repeat images
+            Rectangle: #moving floor
+                size: root.width, 70
+                texture: self.floor_texture
+                #need to use textures to repeat images
+    Pipe:
+        id: pipe1
+        size_hint: None, None
+        #by default the size_hint = (1,1) which is the size of the window
+        #by setting it to None, it means I do not want a size_hint
+        size: 100, root.height
+        #widget height = Window height
+        pos: root.width, 70
+        #y_coordinate = 70 is redundant code sorry, not needed
+        canvas:
+            Rectangle: #top pipe
+                size: self.size[0], self.height - self.gap_size - self.bottom_pipe_height - 70
+                #self.size[0] = 100 (width of Pipe widget)
+                #bottom_pipe_height attribute instantiated in the class Pipe
+                pos: self.pos[0], 70 + self.bottom_pipe_height + self.gap_size
+                #x_coordinate follows Pipe widget, y_coordinate must + floor & btm pipe height & gapsize
+                texture: self.pipe_texture
+                #use texture so i can repeat the image
+            Rectangle: #bottom pipe
+                size: self.size[0], self.bottom_pipe_height
+                pos: self.pos[0], 70
+                texture: self.pipe_texture
+    Pipe:
+        id: pipe2
+        size_hint: None, None
+        size: 100, root.height
+        pos: root.width + self.size[0] + root.width / 5, 70
+        #to ensure equal distance between pipes 
+        #distance between pipes = root.width / 5
+        canvas:
+            Rectangle: #top pipe
+                size: self.size[0], self.height - self.gap_size - self.bottom_pipe_height - 70
+                pos: self.pos[0], 70 + self.bottom_pipe_height + self.gap_size
+                texture: self.pipe_texture
+            Rectangle: #bottom pipe
+                size: self.size[0], self.bottom_pipe_height
+                pos: self.pos[0], 70
+                texture: self.pipe_texture
+    
+    Pipe:
+        id: pipe3
+        size_hint: None, None
+        size: 100, root.height
+        pos: root.width + 2* self.size[0] + 2* root.width / 5, 70
+        canvas:
+            Rectangle: 
+                size: self.size[0], self.height - self.gap_size - self.bottom_pipe_height - 70
+                pos: self.pos[0], 70 + self.bottom_pipe_height + self.gap_size
+                texture: self.pipe_texture
+            Rectangle:
+                size: self.size[0], self.bottom_pipe_height
+                pos: self.pos[0], 70
+                texture: self.pipe_texture
+
+    Pipe:
+        id: pipe4
+        size_hint: None, None
+        size: 100, root.height
+        pos: root.width + 3* self.size[0] + 3* root.width / 5, 70
+        canvas:
+            Rectangle: 
+                size: self.size[0], self.height - self.gap_size - self.bottom_pipe_height - 70
+                pos: self.pos[0], 70 + self.bottom_pipe_height + self.gap_size
+                texture: self.pipe_texture
+            Rectangle:
+                size: self.size[0], self.bottom_pipe_height
+                pos: self.pos[0], 70
+                texture: self.pipe_texture
+
+    Pipe:
+        id: pipe5
+        size_hint: None, None
+        size: 100, root.height
+        pos: root.width + 4* self.size[0] + 4* root.width / 5, 70
+        canvas:
+            Rectangle: 
+                size: self.size[0], self.height - self.gap_size - self.bottom_pipe_height - 70
+                pos: self.pos[0], 70 + self.bottom_pipe_height + self.gap_size
+                texture: self.pipe_texture
+            Rectangle:
+                size: self.size[0], self.bottom_pipe_height
+                pos: self.pos[0], 70
+                texture: self.pipe_texture
+    
+    Button:
+        id: button
+        text: "Start your survival!"
+        font_size: 50
+        color: 100, 0, 0, 0.8
+        background_normal: "button.png"
+        #Background image of the button when the button is not pressed
+        background_down: "button.png"
+        #Background image of the button when the button is pressed
+        on_release: 
+            app.start_game()
+            #app refers to the instance of the application and you are calling the method start_game()
+            self.disabled = True
+            #disables button
+            self.opacity = 0
+            #button becomes transparent
+            
+
+
+    Merlion:
+        id: merlion
+        source: "merlion.png"
+        size_hint: None,None
+        pos: 100, root.height / 2 
+        size: 40, 48
+
+    Mask:
+        id: mask
+        size_hint: None, None
+        size: 70, 41
+        pos: self.mask_x , self.mask_y
+        #mask_x attribute instantiated in the Mask class, not rly necessary
+        canvas:
+            Rectangle:
+                source: "mask.png"
+                size: self.size
+                pos: self.pos
+    
+    Label:
+        id: score
+        size_hint: 0.1, 0.1
+        #size = 10% of window height and width 
+        pos: root.width /2 - 0.05* root.width, 0
+        #should have used pos: root.width/2 - self.size[0]/2
+        text: "0"
+        font_size: 50
+    Covid:
+        id: covid
+        source: "avoidcovid.png"
+        size_hint: None, None
+        pos: root.width - 132 , 80
+
+        
+        
+
+
+
+
